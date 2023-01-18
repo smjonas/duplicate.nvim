@@ -7,7 +7,6 @@ Duplicate.operator = function(mode)
   end
 
   local mark_left, mark_right = "[", "]"
-  local mark_left, mark_right = "[", "]"
   if mode == "visual" then
     mark_left, mark_right = "<", ">"
   end
@@ -32,11 +31,16 @@ Duplicate.duplicate_lines = function(line_start, line_end)
   vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
 end
 
-Duplicate.setup = function()
+local default_config = {
+  textobject = "yd",
+}
+
+Duplicate.setup = function(user_config)
+  local config = vim.tbl_deep_extend("force", default_config, user_config or {})
   -- Export module
   _G.Duplicate = Duplicate
-  vim.keymap.set("n", "dp", "v:lua.Duplicate.operator()", { expr = true, desc = "Duplicate" })
-  vim.keymap.set("x", "dp", ":<c-u>lua Duplicate.operator('visual')<cr>", { desc = "Duplicate" })
+  vim.keymap.set("n", config.textobject, "v:lua.Duplicate.operator()", { expr = true, desc = "Duplicate" })
+  vim.keymap.set("x", config.textobject, ":<c-u>lua Duplicate.operator('visual')<cr>", { desc = "Duplicate" })
 end
 
 return Duplicate
