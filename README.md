@@ -1,6 +1,7 @@
 # duplicate.nvim
-A tiny Neovim plugin used to duplicate a textobject. E.g. use `ydip` to duplicate the current paragraph.
-Requires Neovim
+A tiny Neovim plugin used to duplicate a textobject (works in both normal and visual mode). E.g. use `ydip` to duplicate the current paragraph.
+
+Requires Neovim ≥ 0.6.
 
 ## Installation
 Install it just like any other Neovim plugin. Make sure to call the `setup` function.

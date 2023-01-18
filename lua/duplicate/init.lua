@@ -22,13 +22,28 @@ Duplicate.operator = function(mode)
   -- Using `vim.cmd()` wrapper to allow usage of `lockmarks` command, because
   -- raw execution will delete marks inside region (due to
   -- `vim.api.nvim_buf_set_lines()`).
-  vim.cmd(string.format("lockmarks lua Duplicate.duplicate_lines(%d, %d)", line_left, line_right))
+  vim.cmd(
+    string.format("lockmarks lua Duplicate.duplicate_lines(%d, %d, %d, %d)", line_left, line_right, col_left, col_right)
+  )
   return ""
 end
 
-Duplicate.duplicate_lines = function(line_start, line_end)
-  local lines = vim.api.nvim_buf_get_lines(0, line_start - 1, line_end, false)
-  vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
+-- Line indices are 1-based, columns are 0-based
+Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end)
+  if line_start == line_end then
+    assert(col_start and col_end)
+    -- Duplicate within a line
+    local line = vim.api.nvim_buf_get_lines(0, line_start - 1, line_start, false)[1]
+    -- Make columns 1-based
+    col_start, col_end = col_start + 1, col_end + 1
+    local chars = line:sub(col_start, col_end)
+    local updated_line = line:sub(1, col_start - 1) .. chars .. line:sub(col_start)
+    vim.api.nvim_buf_set_lines(0, line_start - 1, line_start, false, { updated_line })
+  else
+    -- Duplicate multiple lines
+    local lines = vim.api.nvim_buf_get_lines(0, line_start - 1, line_end, false)
+    vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
+  end
 end
 
 local default_config = {
