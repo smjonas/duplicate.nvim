@@ -1,5 +1,6 @@
 # duplicate.nvim
-A tiny Neovim plugin used to duplicate a textobject (works in both normal and visual mode). E.g. use `ydip` to duplicate the current paragraph.
+A tiny Neovim plugin used to duplicate a textobject (works in both normal and visual mode).
+E.g. use `ydip` to duplicate the current paragraph or `ydaw` to duplicate the current word (including whitespace).
 
 Requires Neovim ≥ 0.6.
 
@@ -20,6 +21,7 @@ return {
 You can override the default settings by passing a Lua table to the setup function. The default options are:
 ```lua
 require("duplicate").setup {
-  operator = "yd",
+  textobject = "yd", -- expects an operator
+  textobject_cur_line = "ydd", -- duplicate the current line
 }
 ```
