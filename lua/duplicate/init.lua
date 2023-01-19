@@ -51,6 +51,7 @@ end
 
 local default_config = {
   textobject = "yd",
+  textobject_visual_mode = nil,
   textobject_cur_line = "ydd",
 }
 
@@ -58,9 +59,23 @@ Duplicate.setup = function(user_config)
   local config = vim.tbl_deep_extend("force", default_config, user_config or {})
   -- Export module
   _G.Duplicate = Duplicate
-  vim.keymap.set("n", config.textobject, Duplicate.operator, { expr = true, desc = "Duplicate" })
-  vim.keymap.set("n", config.textobject_cur_line, duplicate_cur_line, { desc = "Duplicate current line" })
-  vim.keymap.set("x", config.textobject, ":<c-u>lua Duplicate.operator('visual')<cr>", { desc = "Duplicate" })
+
+  if config.textobject then
+    vim.keymap.set("n", config.textobject, Duplicate.operator, { expr = true, desc = "Duplicate" })
+  end
+
+  if config.textobject_visual_mode then
+    vim.keymap.set(
+      "x",
+      config.textobject_visual_mode,
+      ":<c-u>lua Duplicate.operator('visual')<cr>",
+      { desc = "Duplicate" }
+    )
+  end
+
+  if config.textobject_cur_line then
+    vim.keymap.set("n", config.textobject_cur_line, duplicate_cur_line, { desc = "Duplicate current line" })
+  end
 end
 
 return Duplicate
