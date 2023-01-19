@@ -28,13 +28,8 @@ Duplicate.operator = function(mode)
 end
 
 local duplicate_cur_line = function()
-  local line_nr, _ = unpack(vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win()))
-  vim.cmd(string.format("lockmarks lua Duplicate.duplicate_whole_lines(%d, %d)", line_nr, line_nr))
-end
-
-Duplicate.duplicate_whole_lines = function(line_start, line_end)
-  local lines = vim.api.nvim_buf_get_lines(0, line_start - 1, line_end, false)
-  vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
+  local cur_line, _ = unpack(vim.api.nvim_win_get_cursor(0))
+  vim.cmd(("%scopy%s"):format(cur_line, cur_line))
 end
 
 -- Line indices are 1-based, columns are 0-based
@@ -49,7 +44,8 @@ Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end)
     local updated_line = line:sub(1, col_start - 1) .. chars .. line:sub(col_start)
     vim.api.nvim_buf_set_lines(0, line_start - 1, line_start, false, { updated_line })
   else
-    Duplicate.duplicate_whole_lines(line_start, line_end)
+    local lines = vim.api.nvim_buf_get_lines(0, line_start - 1, line_end, false)
+    vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
   end
 end
 
