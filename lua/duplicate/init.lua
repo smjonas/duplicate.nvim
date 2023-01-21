@@ -49,16 +49,12 @@ Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end)
   end
 end
 
-local default_config = {
-  textobject = "yd",
-  textobject_visual_mode = nil,
-  textobject_cur_line = "ydd",
-}
-
 Duplicate.setup = function(user_config)
-  local config = vim.tbl_deep_extend("force", default_config, user_config or {})
   -- Export module
   _G.Duplicate = Duplicate
+
+  local default = require("duplicate.config").default
+  local config = vim.tbl_deep_extend("force", default, user_config or {})
 
   if config.textobject then
     vim.keymap.set("n", config.textobject, Duplicate.operator, { expr = true, desc = "Duplicate" })
