@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/smjonas/duplicate.nvim/compare/v1.0.0...v2.0.0) (2023-01-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* change configuration for operators
+
+### Features
+
+* add config.transform to support modification of selection before pasting ([866bcb5](https://github.com/smjonas/duplicate.nvim/commit/866bcb5e89aac351a69a034a801f81d170de93c3))
+
+
+### Code Refactoring
+
+* change configuration for operators ([c25c9b4](https://github.com/smjonas/duplicate.nvim/commit/c25c9b4b7f1b591ba1649b36a8e48a0b9e50d5e6))
+
 ## 1.0.0 (2023-01-21)
 
 
