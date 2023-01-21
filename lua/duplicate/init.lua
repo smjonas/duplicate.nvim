@@ -56,21 +56,21 @@ Duplicate.setup = function(user_config)
   local default = require("duplicate.config").default
   local config = vim.tbl_deep_extend("force", default, user_config or {})
 
-  if config.textobject then
-    vim.keymap.set("n", config.textobject, Duplicate.operator, { expr = true, desc = "Duplicate" })
+  if config.operator.normal_mode then
+    vim.keymap.set("n", config.operator.normal_mode, Duplicate.operator, { expr = true, desc = "Duplicate" })
   end
 
-  if config.textobject_visual_mode then
+  if config.operator.visual_mode then
     vim.keymap.set(
       "x",
-      config.textobject_visual_mode,
+      config.operator.visual_mode,
       ":<c-u>lua Duplicate.operator('visual')<cr>",
       { desc = "Duplicate" }
     )
   end
 
-  if config.textobject_cur_line then
-    vim.keymap.set("n", config.textobject_cur_line, duplicate_cur_line, { desc = "Duplicate current line" })
+  if config.operator.line then
+    vim.keymap.set("n", config.operator.line, duplicate_cur_line, { desc = "Duplicate current line" })
   end
 end
 

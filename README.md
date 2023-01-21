@@ -21,9 +21,11 @@ return {
 You can override the default settings by passing a Lua table to the setup function. The default options are:
 ```lua
 require("duplicate").setup {
-  -- set any textobject to `nil` to disable it
-  textobject = "yd", -- duplicate in normal mode, expects an operator
-  textobject_visual_mode = nil, -- duplicate in visual mode, unmapped by default
-  textobject_cur_line = "ydd", -- duplicate the current line
+  -- set any operator to `nil` to disable it
+  operator = {
+    normal_mode = "yd", -- duplicate in normal mode, expects an operator
+    visual_mode = nil, -- duplicate in visual mode, unmapped by default
+    line = "ydd", -- duplicate the current line
+  },
 }
 ```
