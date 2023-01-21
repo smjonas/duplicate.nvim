@@ -11,6 +11,6 @@ M.default = {
   transform = nil,
 }
 
-M.version = "1.0.0" -- x-release-please-version
+M.version = "2.0.0" -- x-release-please-version
 
 return M
