@@ -27,10 +27,8 @@ require("duplicate").setup {
     visual_mode = nil, -- duplicate in visual mode, unmapped by default
     line = "ydd", -- duplicate the current line
   },
-  -- A function with signature `transform(lines: table<string>, opts: table): table<string>`.
+  -- A function with signature `transform(lines: table<string>): table<string>`.
   -- Can be used to modify the text to be duplicated.
-  -- `opts` is a table with the following keys:
-  --   - `mode`: either `"normal"`, `"visual"` or `"line`
   transform = nil,
 }
 ```

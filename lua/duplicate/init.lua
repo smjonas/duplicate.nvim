@@ -39,14 +39,13 @@ local duplicate_cur_line = function()
   local line_nr, _ = unpack(vim.api.nvim_win_get_cursor(0))
   local line = vim.api.nvim_get_current_line()
   if config.transform then
-    line = config.transform({ line }, { mode = "line" })[1]
+    line = config.transform({ line })[1]
   end
   vim.api.nvim_buf_set_lines(0, line_nr, line_nr, false, { line })
 end
 
 -- Line indices are 1-based, columns are 0-based
 Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end, mode)
-  local opts = { mode = mode }
   if line_start == line_end then
     -- Duplicate within a line
     assert(col_start and col_end)
@@ -56,14 +55,14 @@ Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end, m
     col_start, col_end = col_start + 1, col_end + 1
     local chars = line:sub(col_start, col_end)
     if config.transform then
-      chars = config.transform({ chars }, opts)[1]
+      chars = config.transform({ chars })[1]
     end
     local updated_line = line:sub(1, col_end) .. chars .. line:sub(col_end + 1)
     vim.api.nvim_buf_set_lines(0, line_start - 1, line_start, false, { updated_line })
   else
     local lines = vim.api.nvim_buf_get_lines(0, line_start - 1, line_end, false)
     if config.transform then
-      lines = config.transform(lines, opts)
+      lines = config.transform(lines)
     end
     vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
   end
