@@ -40,8 +40,8 @@ function. The default options are:
 
 >lua
     require("duplicate").setup {
-      -- set any textobject to `nil` to disable it
-      textobjects = {
+      -- set any operator to `nil` to disable it
+      operator = {
         normal_mode = "yd", -- duplicate in normal mode, expects an operator
         visual_mode = nil, -- duplicate in visual mode, unmapped by default
         line = "ydd", -- duplicate the current line
