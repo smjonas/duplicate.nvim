@@ -23,7 +23,7 @@ You can override the default settings by passing a Lua table to the setup functi
 require("duplicate").setup {
   -- set any operator to `nil` to disable it
   operator = {
-    normal_mode = "yd", -- duplicate in normal mode, expects an operator
+    normal_mode = "yd", -- duplicate in normal mode, expects a text-object
     visual_mode = nil, -- duplicate in visual mode, unmapped by default
     line = "ydd", -- duplicate the current line
   },
