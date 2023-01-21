@@ -1,7 +1,8 @@
 local Duplicate = {}
+local config
 
 Duplicate.operator = function(mode)
-  if mode == nil then
+  if mode == "normal" then
     vim.cmd("set operatorfunc=v:lua.Duplicate.operator")
     return "g@"
   end
@@ -22,29 +23,48 @@ Duplicate.operator = function(mode)
   -- Using `vim.cmd()` wrapper to allow usage of `lockmarks` command, because
   -- raw execution will delete marks inside region (due to -- `vim.api.nvim_buf_set_lines()`).
   vim.cmd(
-    string.format("lockmarks lua Duplicate.duplicate_lines(%d, %d, %d, %d)", line_left, line_right, col_left, col_right)
+    string.format(
+      "lockmarks lua Duplicate.duplicate_lines(%d, %d, %d, %d, %s)",
+      line_left,
+      line_right,
+      col_left,
+      col_right,
+      mode
+    )
   )
   return ""
 end
 
 local duplicate_cur_line = function()
-  local cur_line, _ = unpack(vim.api.nvim_win_get_cursor(0))
-  vim.cmd(("%scopy%s"):format(cur_line, cur_line))
+  local line_nr, _ = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+  if config.transform then
+    line = config.transform({ line }, { mode = "line" })[1]
+  end
+  vim.api.nvim_buf_set_lines(0, line_nr, line_nr, false, { line })
 end
 
 -- Line indices are 1-based, columns are 0-based
-Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end)
+Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end, mode)
+  local opts = { mode = mode }
   if line_start == line_end then
     -- Duplicate within a line
     assert(col_start and col_end)
     local line = vim.api.nvim_buf_get_lines(0, line_start - 1, line_start, false)[1]
+
     -- Make columns 1-based
     col_start, col_end = col_start + 1, col_end + 1
     local chars = line:sub(col_start, col_end)
-    local updated_line = line:sub(1, col_start - 1) .. chars .. line:sub(col_start)
+    if config.transform then
+      chars = config.transform({ chars }, opts)[1]
+    end
+    local updated_line = line:sub(1, col_end) .. chars .. line:sub(col_end + 1)
     vim.api.nvim_buf_set_lines(0, line_start - 1, line_start, false, { updated_line })
   else
     local lines = vim.api.nvim_buf_get_lines(0, line_start - 1, line_end, false)
+    if config.transform then
+      lines = config.transform(lines, opts)
+    end
     vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
   end
 end
@@ -54,10 +74,12 @@ Duplicate.setup = function(user_config)
   _G.Duplicate = Duplicate
 
   local default = require("duplicate.config").default
-  local config = vim.tbl_deep_extend("force", default, user_config or {})
+  config = vim.tbl_deep_extend("force", default, user_config or {})
 
   if config.operator.normal_mode then
-    vim.keymap.set("n", config.operator.normal_mode, Duplicate.operator, { expr = true, desc = "Duplicate" })
+    vim.keymap.set("n", config.operator.normal_mode, function()
+      return Duplicate.operator("normal")
+    end, { expr = true, desc = "Duplicate" })
   end
 
   if config.operator.visual_mode then
