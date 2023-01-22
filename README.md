@@ -1,6 +1,10 @@
 # duplicate.nvim
-A tiny Neovim plugin used to duplicate a textobject (works in both normal and visual mode).
-E.g. use `ydip` to duplicate the current paragraph or `ydaw` to duplicate the current word (including whitespace).
+A Neovim plugin used to duplicate a textobject.
+E.g. use `ydaw` to duplicate the current word (including whitespace) or `3ydd` to duplicate the next three lines.
+
+## Features
+- mappings for duplication in normal mode (line-wise or using textobject) + visual mode
+- duplication in normal mode respects `v:count` and is dot-repeatable
 
 Requires Neovim ≥ 0.6.
 

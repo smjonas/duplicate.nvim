@@ -37,11 +37,14 @@ end
 
 local duplicate_cur_line = function()
   local line_nr, _ = unpack(vim.api.nvim_win_get_cursor(0))
-  local line = vim.api.nvim_get_current_line()
+  -- Respect v:count
+  local line_count = math.max(1, vim.v.count)
+  local lines = vim.api.nvim_buf_get_lines(0, line_nr - 1, line_nr + line_count - 1, false)
   if config.transform then
-    line = config.transform({ line })[1]
+    lines = config.transform(lines)
   end
-  vim.api.nvim_buf_set_lines(0, line_nr, line_nr, false, { line })
+  local last_line = line_nr + line_count - 1
+  vim.api.nvim_buf_set_lines(0, last_line, last_line, false, lines)
 end
 
 -- Line indices are 1-based, columns are 0-based
