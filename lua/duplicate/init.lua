@@ -42,6 +42,7 @@ local duplicate_cur_line = function()
     line = config.transform({ line })[1]
   end
   vim.api.nvim_buf_set_lines(0, line_nr, line_nr, false, { line })
+  vim.cmd.normal{ "`]", bang = true } -- move cursor to duplicated text
 end
 
 -- Line indices are 1-based, columns are 0-based
@@ -66,6 +67,7 @@ Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end, m
     end
     vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
   end
+  vim.cmd.normal{ "`]", bang = true } -- move cursor to duplicated text
 end
 
 Duplicate.setup = function(user_config)
