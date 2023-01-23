@@ -49,6 +49,7 @@ end
 
 -- Line indices are 1-based, columns are 0-based
 Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end, mode)
+  local _, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
   if line_start == line_end then
     -- Duplicate within a line
     assert(col_start and col_end)
@@ -62,12 +63,16 @@ Duplicate.duplicate_lines = function(line_start, line_end, col_start, col_end, m
     end
     local updated_line = line:sub(1, col_end) .. chars .. line:sub(col_end + 1)
     vim.api.nvim_buf_set_lines(0, line_start - 1, line_start, false, { updated_line })
+    -- Set cursor to first char of inserted chars
+    vim.api.nvim_win_set_cursor(0, { line_start, cursor_col + #chars })
   else
     local lines = vim.api.nvim_buf_get_lines(0, line_start - 1, line_end, false)
     if config.transform then
       lines = config.transform(lines)
     end
     vim.api.nvim_buf_set_lines(0, line_end, line_end, false, lines)
+    -- Set cursor to first duplicated line
+    vim.api.nvim_win_set_cursor(0, { line_end + 1, cursor_col })
   end
 end
 
