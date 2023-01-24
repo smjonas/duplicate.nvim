@@ -1,4 +1,4 @@
-*duplicate.nvim.txt*      For NVIM ≥ 0.6.0      Last change: 2023 January 23
+*duplicate.nvim.txt*      For NVIM ≥ 0.6.0      Last change: 2023 January 24
 
 ==============================================================================
 Table of Contents                           *duplicate.nvim-table-of-contents*
