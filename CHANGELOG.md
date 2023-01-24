@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://github.com/smjonas/duplicate.nvim/compare/v2.0.0...v2.1.0) (2023-01-24)
+
+
+### Features
+
+* move cursor to beginning of duplicated text ([06e5e46](https://github.com/smjonas/duplicate.nvim/commit/06e5e46da00925c409ee6bdb6cd0a15a5dac32f5))
+* respect v:count in line-wise mapping ([a3691db](https://github.com/smjonas/duplicate.nvim/commit/a3691db9e58b8f1c4b0b9ed76098246299dee913))
+
+
+### Bug Fixes
+
+* moving cursor when duplicating current line ([#10](https://github.com/smjonas/duplicate.nvim/issues/10)) ([d58104c](https://github.com/smjonas/duplicate.nvim/commit/d58104c362ceb886c5e6677c43c011bd2b1e788f))
+
 ## [2.0.0](https://github.com/smjonas/duplicate.nvim/compare/v1.0.0...v2.0.0) (2023-01-21)
 
 
