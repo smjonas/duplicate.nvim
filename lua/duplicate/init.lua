@@ -47,7 +47,7 @@ local duplicate_cur_line = function()
   vim.api.nvim_buf_set_lines(0, last_line, last_line, false, lines)
   -- Set Cursor to duplicated line
   local cursor_line, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
-  vim.api.nvim_win_set_cursor(0, { cursor_line + 1, cursor_col })
+  vim.api.nvim_win_set_cursor(0, { cursor_line + line_count, cursor_col })
 end
 
 -- Line indices are 1-based, columns are 0-based
