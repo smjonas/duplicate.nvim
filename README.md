@@ -6,7 +6,7 @@ Mini-operators provides operators for duplicating/multiplying text.
 The default keybindings to operate on a textobject or the current line are `gm` and `gmm`, respectively.
 To use the same keybindings `duplicate.nvim` uses, configure `mini-operators` as follows:*
 ```lua
-require("mini-operators").setup {
+require("mini.operators").setup {
   prefix = "yd"
 }
 ```
