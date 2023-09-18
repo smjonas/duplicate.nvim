@@ -21,7 +21,7 @@ are gm and gmm, respectively. To use the same keybindings duplicate.nvim uses,
 configure mini-operators as follows:_
 
 >lua
-    require("mini-operators").setup {
+    require("mini.operators").setup {
       prefix = "yd"
     }
 <
