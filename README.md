@@ -1,4 +1,19 @@
+# Deprecation Notice
+> :warning: This plugin is archived and will no longer be maintained.
+
+*Please consider using an equivalent plugin such as [mini-operators](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-operators.md) that is part of [mini.nvim](https://github.com/echasnovski/mini.nvim).
+Mini-operators provides operators for duplicating/multiplying text.
+The default keybindings to operate on a textobject or the current line are `gm` and `gmm`, respectively.
+To use the same keybindings `duplicate.nvim` uses, configure `mini-operators` as follows:*
+```lua
+require("mini-operators").setup {
+  prefix = "yd"
+}
+```
+---
+
 # duplicate.nvim
+
 A Neovim plugin used to duplicate a textobject.
 E.g. use `ydaw` to duplicate the current word (including whitespace) or `3ydd` to duplicate the next three lines.
 
