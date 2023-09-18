@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/smjonas/duplicate.nvim/compare/v2.1.0...v3.0.0) (2023-09-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* add deprecation notice
+
+### Documentation
+
+* add deprecation notice ([2a86961](https://github.com/smjonas/duplicate.nvim/commit/2a8696177e00d384b6e5c01b357356225f586d32))
+
 ## [2.1.0](https://github.com/smjonas/duplicate.nvim/compare/v2.0.0...v2.1.0) (2023-01-24)
 
 
